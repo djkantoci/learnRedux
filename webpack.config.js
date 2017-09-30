@@ -22,10 +22,11 @@ module.exports = {
   },
   resolve: {
     modules: [
-      __dirname, 'node_modules'
+        path.resolve(__dirname, 'node_modules'),
+        path.resolve(__dirname, 'app/components')   
     ],
     alias: {
-      applicationStyles: 'app/styles/app.scss'
+      applicationStyles: path.resolve(__dirname, 'app/styles/app.scss'),
     },
     extensions: ['*','.js','.jsx']
   },
