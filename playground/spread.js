@@ -31,3 +31,25 @@ var final = ['Đuđi', ...names];
 final.forEach(function(name) {
     console.log('Hi '+ name);
 });
+
+
+// Pure functions
+function add(a, b) {
+    return a + b;
+}
+
+function changeProp(obj) {
+    return {
+        ...obj,
+        name: 'Mladen'
+    };
+}
+
+var startingValue = {
+    name: 'Đuđi',
+    age: 29    
+}
+
+var res = changeProp(startingValue);
+console.log(startingValue);
+console.log(res);
