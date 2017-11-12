@@ -20,14 +20,30 @@ var reducer = (state = stateDefault, action) => {
     }
 };
 
-var store = redux.createStore(reducer); 
+var store = redux.createStore(reducer, redux.compose(
+    // ovo više tak ne radi:
+    //window.devToolsExstension ? window.devToolsExstension() : f => f
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)); 
+
+// Subscribe to changes
+var unsubscribe = store.subscribe(() => {
+    var state = store.getState();
+    
+    console.log('Search test is', state.searchText);
+    document.getElementById('app').innerHTML = state.searchText;
+});
+// unsubscribe();
 
 var currentState = store.getState();
 console.log('currentState', currentState);
 
 store.dispatch({
     type: 'CHANGE_SEARCH_TEXT',
-    searchText: 'Todo text'
+    searchText: 'Work now'
 });
 
-console.log('Search text should be Todo text', store.getState());
+store.dispatch({
+    type: 'CHANGE_SEARCH_TEXT',
+    searchText: 'Jejjejejeje'
+});

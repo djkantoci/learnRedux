@@ -15,7 +15,20 @@ var reducer = (state = {name : 'Anonymous'}, action) => {
             return state;
     }
 };
-var store = redux.createStore(reducer); 
+var store = redux.createStore(reducer, redux.compose(
+    // ovo više tak ne radi:
+    //window.devToolsExstension ? window.devToolsExstension() : f => f
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)); 
+
+// Subscribe to changes
+var unsubscribe = store.subscribe(() => {
+    var state = store.getState();
+    
+    console.log('Name is', state.name);
+    document.getElementById('app').innerHTML = state.name;
+});
+// unsubscribe();
 
 var currentState = store.getState();
 console.log('currentState', currentState);
@@ -25,4 +38,7 @@ store.dispatch({
     name: 'Đ'
 });
 
-console.log('Name should be Đ', store.getState());
+store.dispatch({
+    type: 'CHANGE_NAME',
+    name: 'Blabla'
+});
